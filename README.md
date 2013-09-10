@@ -12,7 +12,7 @@ Parent repositories :
 - [cloudfoundry/cf-services-release] (https://github.com/cloudfoundry/cf-services-release)
 - [cloudfoundry/cf-services-contrib-release] (https://github.com/cloudfoundry/cf-services-contrib-release)
 
-##Service installation
+##Ping Service installation
 
 <pre>
  echo "---" > config/dev.yml
