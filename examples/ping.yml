@@ -1,9 +1,9 @@
 ---
-name: cf-service-ping
+name: service-ping
 director_uuid: thewonderfullidreturnedbyboshstatuscommand #TOCHANGE
 
 releases:
- - name: cf-services-contrib
+ - name: cf-service-ping
    version: 0.1-dev  #TOCHANGE
 
 compilation:
@@ -42,7 +42,7 @@ resource_pools:
 
 jobs:
   - name: ping_gateway
-    release: cf-services-contrib
+    release: cf-service-ping
     template:
     - ping_gateway
     instances: 1
@@ -59,7 +59,7 @@ jobs:
         password: c1oudc0w #TOCHANGE
 
   - name: ping_node
-    release: cf-services-contrib
+    release: cf-service-ping
     template: ping_node_ng
     instances: 1
     resource_pool: small
