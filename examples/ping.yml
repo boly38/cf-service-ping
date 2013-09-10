@@ -1,0 +1,129 @@
+---
+name: cf-service-ping
+director_uuid: thewonderfullidreturnedbyboshstatuscommand #TOCHANGE
+
+releases:
+ - name: cf-services-contrib
+   version: 0.1-dev  #TOCHANGE
+
+compilation:
+  workers: 2
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: myflavor.m1.small  #TOCHANGE
+
+update:
+  canaries: 1
+  canary_watch_time: 30000-600000
+  update_watch_time: 30000-600000
+  max_in_flight: 4
+  max_errors: 1
+
+networks:
+- name: floating
+  type: vip
+  cloud_properties: {}
+- name: default
+  type: dynamic
+  cloud_properties:
+    security_groups:
+    - cloudfoundry #TOCHANGE
+
+resource_pools:
+  - name: small
+    network: default
+    size: 2
+    stemcell:
+      name: bosh-stemcell
+      version: latest
+    cloud_properties:
+      instance_type: myflavor.m1.small #TOCHANGE
+
+jobs:
+  - name: ping_gateway
+    release: cf-services-contrib
+    template:
+    - ping_gateway
+    instances: 1
+    resource_pool: small
+    networks:
+      - name: default
+        default: [dns, gateway]
+    properties:
+      # Service credentials
+      uaa_client_id: "cf"
+      uaa_endpoint: http://uaa.mycloud.com #TOCHANGE
+      uaa_client_auth_credentials:
+        username: services
+        password: c1oudc0w #TOCHANGE
+
+  - name: ping_node
+    release: cf-services-contrib
+    template: ping_node_ng
+    instances: 1
+    resource_pool: small
+    persistent_disk: 10000
+    properties:
+      plan: default
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+properties:
+  networks:
+    apps: default
+    management: default
+
+  nats:
+    address: 0.core.default.cf.microbosh
+    port: 4222
+    user: nats
+    password: c1oudc0w
+    authorization_timeout: 5
+
+  cc_api_version: v2
+
+  cc: &cc
+    logging_level: debug
+    external_host: ccng
+    srv_api_uri: http://api.mycloud.com  #TOCHANGE
+    cc_partition: default
+    db_encryption_key: c1oudc0w
+    bootstrap_admin_email: admin@mycloud.com  #TOCHANGE
+    bulk_api_password: c1oudc0w
+    uaa_resource_id: cloud_controller
+    staging_upload_user: uploaduser
+    staging_upload_password: c1oudc0w
+    resource_pool:
+      resource_directory_key: cc-resources
+      # Local provider when using NFS
+      fog_connection:
+        provider: Local
+        local_root: /var/vcap/shared
+    packages:
+      app_package_directory_key: cc-packages
+    droplets:
+      droplet_directory_key: cc-droplets
+    default_quota_definition: runaway
+
+  service_plans:
+    ping:
+      default:
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+  ping_gateway:
+    token: pingMyWonderfullToken
+    supported_versions: ["1.0"]
+    version_aliases:
+      current: "1.0"
+    cc_api_version: v2
+  ping_node:
+    supported_versions: ["1.0"]
+    default_version: "1.0"
+
