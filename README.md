@@ -32,9 +32,9 @@ Parent repositories :
 ##Target ping_node vm
 
 Jobs to monitor are defined into <code>/var/vcap/ping_node_ng/monit<code>
-- "monit" start "warden" (then "warden" dependencies could be started)
-- "monit" start "ping_node"
-- "ping_node" start "warden_servic_ctl" then the "ping_node" bin
+- <code>monit</code> start "warden" (then "warden" dependencies could be started)
+- <code>monit</code> start "ping_node"
+- <code>ping_node</code> start "warden_service_ctl" then the "ping_node" bin
 
 ##Target ping_node logs
 
@@ -92,3 +92,7 @@ The following files or directories are not maintained into this repository _cf. 
 - <code>packages</code> : common, libyaml, node,root_lucid64, ruby, ruby_next, sqlite, syslog_aggregator
 - <code>src</code> : common, pkg_utils, syslog_aggregator, services_warden
 
+
+###Stay to do
+- fix test 
+- write a readme on how to execute isolated tests (usin rspec, nats & warden shell)
