@@ -87,12 +87,11 @@ Jobs to monitor are defined into <code>/var/vcap/ping_node_ng/monit<code>
 
 ###Unhandled source
 
-The following files or directories are not maintained into this repository _cf. [cf-services-contrib-release](https://github.com/cloudfoundry/cf-services-contrib-release/)_
-
+The following files or directories have been duplicated from  [cf-services-contrib-release](https://github.com/cloudfoundry/cf-services-contrib-release/) and are not maintained into this repository.
 - <code>packages</code> : common, libyaml, node,root_lucid64, ruby, ruby_next, sqlite, syslog_aggregator
 - <code>src</code> : common, pkg_utils, syslog_aggregator, services_warden
 
 
 ###Stay to do
-- fix test 
+- fix tests 
 - write a readme on how to execute isolated tests (usin rspec, nats & warden shell)
