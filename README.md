@@ -2,7 +2,7 @@ cf-service-ping
 ===============
 
 ##Goal of this repository
-Aim of this repository is to provide a small simple cloudfoundry service called "ping" :
+Aim of this repository is to provide a small simple cloudfoundry (v2) service called "ping" :
 - describe the minimal requirements to (un)provision a Ping as a Service
 - describe ping_node and ping_gateway
 - ping_node use warden container
