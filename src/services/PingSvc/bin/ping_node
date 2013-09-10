@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+#
+# Copyright (c) 2009-2011 VMware, Inc.
+
+ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
+require 'bundler/setup'
+require 'vcap_services_base'
+
+$LOAD_PATH.unshift(File.expand_path("../../lib", __FILE__))
+require "ping_service/ping_node"
+
+class VCAP::Services::Ping::NodeBin < VCAP::Services::Base::NodeBin
+
+  def node_class
+    VCAP::Services::Ping::Node
+  end
+
+  def default_config_file
+    File.join(File.dirname(__FILE__), '..', 'config', 'ping_node.yml')
+  end
+
+  def additional_config(options, config)
+    options[:port] = parse_property(config, "port", Integer)
+    options[:supported_versions] = parse_property(config, "supported_versions", Array)
+    options[:default_version] = parse_property(config, "default_version", String)
+    options
+  end
+
+end
+
+VCAP::Services::Ping::NodeBin.new.start

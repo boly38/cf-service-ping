@@ -1,0 +1,5 @@
+check process ping_gateway
+  with pidfile /var/vcap/sys/run/ping_gateway/ping_gateway.pid
+  start program "/var/vcap/jobs/ping_gateway/bin/ping_gateway_ctl start"
+  stop program "/var/vcap/jobs/ping_gateway/bin/ping_gateway_ctl stop"
+  group vcap

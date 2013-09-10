@@ -1,0 +1,35 @@
+#!/bin/bash
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+
+STOP_TIMEOUT=<%= properties.ping_node.instance_stop_timeout || 3 %>
+OP=$1
+BASE_DIR=$2
+LOG_DIR=$3
+COMMON_DIR=$4
+PIDFILE=$BASE_DIR/service.pid
+
+source $COMMON_DIR/bin/utils.sh
+
+case $OP in
+  start)
+    BIN_DIR=$5
+    PORT=$6
+    # start the instance
+    touch $LOG_DIR/ping.log
+    echo $$ >> $PIDFILE
+    exec ruby $BIN_DIR/ping_src/ping_server.rb $PORT > $LOG_DIR/ping.log
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE $STOP_TIMEOUT 1
+    ;;
+
+  status)
+    [ -f $PIDFILE ] && [ -e /proc/`head -1 $PIDFILE` ]
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop|status}"
+
+    ;;
+esac

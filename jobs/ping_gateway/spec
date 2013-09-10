@@ -1,0 +1,14 @@
+---
+name: ping_gateway
+
+templates:
+  ping_gateway_ctl: bin/ping_gateway_ctl
+  ping_gateway.yml.erb: config/ping_gateway.yml
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+
+packages:
+  - common
+  - ping_gateway
+  - ruby
+  - sqlite
+  - syslog_aggregator

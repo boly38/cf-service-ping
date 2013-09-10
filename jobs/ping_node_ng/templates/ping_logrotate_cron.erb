@@ -1,0 +1,2 @@
+<% freq_min=properties.ping_node && properties.ping_node.logrotate && properties.ping_node.logrotate.freq_min || 5 %>
+*/<%= freq_min %> * * * * test -x /usr/sbin/logrotate && /usr/sbin/logrotate /var/vcap/jobs/ping_node_ng/config/logrotate.conf >>/var/vcap/sys/log/ping_node/ping_logrotate_cron.log 2>&1

@@ -1,0 +1,14 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+THEVM="`hostname` (`ifconfig eth0 | perl -n -e 'if (m/inet addr:([\d\.]+)/g) { print $1 }'`)"
+
+echo "pre_packaging ping_node_ng on $THEVM"
+
+cd ${BUILD_DIR}
+pkg_utils/vendor.sh services/PingSvc
+mv services_warden warden_meta
+mv warden_meta/* .
+rm -rf warden_meta
+
+pkg_utils/vendor.sh warden

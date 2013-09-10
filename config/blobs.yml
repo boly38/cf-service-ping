@@ -1,0 +1,41 @@
+---
+node/node-v0.4.12.tar.gz:
+  object_id: 2839baf1-9f12-4569-9198-07c831b99550
+  sha: !binary |-
+    MWM2ZTM0YjkwYWQ2Yjk4OTY1OGVlODVlMGQwY2IxNjc5N2IxNjQ2MA==
+  size: 12421469
+ruby/rubygems-1.8.24.tgz:
+  object_id: 989fc0dc-0d6c-4c7b-bff9-787d30d77e96
+  sha: !binary |-
+    MzBmMjcwNDdlNzRmNzk0MzExNzczNmEwZDNlMjI0OTk0ZmVlMDkwNQ==
+  size: 380101
+ruby/ruby-1.9.2-p180.tar.gz:
+  object_id: 4c79d898-9f49-4e61-912e-7e91e344bfb1
+  sha: !binary |-
+    NmE0ODJiYzA3MjM5YjM3YmNhZGY2OGRkYTYzYzY1ZDIwZGMxOWViZQ==
+  size: 11158935
+ruby/bundler-1.2.1.gem:
+  object_id: 159c8f20-174f-41e7-8c2f-d63f41f65475
+  sha: !binary |-
+    MGNiZTZhZDdhNDFmMDY0ZDZjMTFjMTA1ODQ2NWZmZmIxYmQ1ODA2OQ==
+  size: 226816
+ruby/ruby-1.9.3-p392.tar.gz:
+  object_id: c1237f02-fb79-4cfb-9fba-e5acf9090f28
+  sha: !binary |-
+    ZWM3NWZjYmQzYjZiNDZjZTZlYzk5N2VlNGM4NjE0NWI0YWJkNTc0OA==
+  size: 12557294
+libyaml/yaml-0.1.4.tgz:
+  object_id: a197ef94-5eb7-4ac7-b3a2-2ddb60d8ecad
+  sha: !binary |-
+    ZTBlNWUwOTE5MmFiMTBhNjA3ZTNkYTI5NzBkYjQ5MjExOGY1NjBmMg==
+  size: 471759
+sqlite/sqlite-autoconf-3070500.tar.gz:
+  object_id: 36d0442d-afb4-405f-9f6d-9974d80722bf
+  sha: !binary |-
+    NGUxMzM4NDk3YjhkYTUwYjg0MzA3MTkxYmIzNDE4ZTllYzU3MTVkNw==
+  size: 1551070
+rootfs/lucid64.tar.gz:
+  object_id: 57618265-693a-4af6-831a-d2eba131df64
+  sha: !binary |-
+    YjI2MzNiMmFiNDk2NGY5MTQwMmJiMmQ4ODlmMmYxMjQ0OWE4YjgyOA==
+  size: 199489185

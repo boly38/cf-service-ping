@@ -1,0 +1,28 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+THEVM="`hostname` (`ifconfig eth0 | perl -n -e 'if (m/inet addr:([\d\.]+)/g) { print $1 }'`)"
+
+echo "packaging ping_node_ng on $THEVM"
+cp -a * ${BOSH_INSTALL_TARGET}
+
+# echo "$THEVM bosh install target :"
+# echo "`ls -lartkh ${BOSH_INSTALL_TARGET}/`"
+
+# echo "install ping_node_ng git proxy on $THEVM"
+# cp ping_src/git-proxy.sh /tmp && chmod a+x /tmp/git-proxy.sh
+# GIT_PROXY_COMMAND=/tmp/git-proxy.sh
+
+echo "bundle ping node package on $THEVM"
+(
+  cd ${BOSH_INSTALL_TARGET}/services/PingSvc
+  bundle_cmd=/var/vcap/packages/ruby/bin/bundle
+  $bundle_cmd config build.do_sqlite3 --with-sqlite3-dir=/var/vcap/packages/sqlite
+  $bundle_cmd install --local --deployment --without=development test
+
+  cd ${BOSH_INSTALL_TARGET}/warden
+  $bundle_cmd install --local --deployment --without=development test
+
+  # Configure it to our liking, as well as compile helper binaries
+  $bundle_cmd exec rake setup:bin
+ )

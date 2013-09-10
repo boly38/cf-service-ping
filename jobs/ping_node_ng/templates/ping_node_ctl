@@ -1,0 +1,64 @@
+#!/bin/bash
+
+PING_ADMIN_USER=<%= properties.ping_node.admin_user   || "ping_admin" %>
+PING_ADMIN_GROUP=<%= properties.ping_node.admin_group || "admin" %>
+PING_ADMIN_PASSWD_HASH=<%= properties.ping_node.admin_passwd_hash || "" %>
+
+if [ -n "$PING_ADMIN_PASSWD_HASH" ]; then
+    # do a mod in addition to the add in order to support password changes
+    USER_ARGS="-g $PING_ADMIN_GROUP -p $PING_ADMIN_PASSWD_HASH $PING_ADMIN_USER"
+    /usr/sbin/useradd -m -s /bin/bash $USER_ARGS
+    /usr/sbin/usermod $USER_ARGS
+fi
+
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+
+COMMON_DIR=/var/vcap/store/ping_common
+JOB_DIR=/var/vcap/jobs/ping_node_ng
+RUN_DIR=/var/vcap/sys/run/ping_node
+LOG_DIR=/var/vcap/sys/log/ping_node
+PIDFILE=$RUN_DIR/ping_node.pid
+CONF_DIR=/var/vcap/jobs/ping_node_ng/config
+SERV_LOG_DIR=/var/vcap/sys/service-log/ping
+
+source /var/vcap/packages/common/utils.sh
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "Ping node"
+
+    sysctl -w net.ipv4.ip_local_port_range="30000 45000"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+    mkdir -p $SERV_LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    # Enable log aggregation
+    <% if properties.syslog_aggregator %>
+    /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $CONF_DIR
+    <% end %>
+
+    (crontab -l | sed /ping_logrotate/d; cat /var/vcap/jobs/ping_node_ng/config/ping_logrotate.cron) | sed /^$/d | crontab
+
+    mkdir -p $COMMON_DIR/bin
+    rsync -arl $JOB_DIR/bin/warden_service_ctl $COMMON_DIR/bin
+    rsync -arl /var/vcap/packages/common/utils.sh $COMMON_DIR/bin
+    chmod -R 755 $COMMON_DIR/bin
+
+    exec /var/vcap/packages/ping_node_ng/services/PingSvc/bin/ping_node -c /var/vcap/jobs/ping_node_ng/config/ping_node.yml >>$LOG_DIR/ping_node.stdout.log 2>>$LOG_DIR/ping_node.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE 60
+
+    crontab -l | sed /ping_logrotate/d | crontab
+
+    ;;
+
+  *)
+  echo "Usage: ping_node_ctl {start|stop}" ;;
+esac
+exit 0

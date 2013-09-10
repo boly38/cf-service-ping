@@ -1,0 +1,13 @@
+---
+name: ping_node_ng
+
+dependencies:
+- sqlite
+- ruby
+
+files:
+- ping_src/*
+- services/PingSvc/**/*
+- services_warden/warden/**/*
+- pkg_utils/*
+- common/services/utils.sh

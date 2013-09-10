@@ -1,0 +1,10 @@
+---
+name: ping_gateway
+
+dependencies:
+- ruby
+- sqlite
+
+files:
+- services/PingSvc/**/*
+- pkg_utils/*

@@ -1,0 +1,20 @@
+---
+service:
+  name: ping
+  version: "1.0"
+  description: 'Ping sample service'
+  plans: ['free']
+  default_plan: free
+  tags: ['sample','ping']
+  supported_versions: ['1.0']
+  version_aliases:
+    'current': '1.0'
+  timeout: 20
+ip_route: localhost
+index: 0
+token: "cloudPingGateway"
+logging:
+  level: debug
+mbus: nats://localhost:4222
+pid: /var/vcap/sys/run/ping_service.pid
+node_timeout: 20  

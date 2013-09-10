@@ -1,0 +1,28 @@
+---
+plan: free
+# local_db: sqlite3:/var/vcap/services/ping/ping_node.db
+mbus: nats://localhost:4222/
+index: 0
+base_dir: /var/vcap/services/ping/instances
+logging:
+  level: debug
+pid: /var/vcap/sys/run/ping_node.pid
+service_log_dir: /var/vcap/sys/service-log/ping
+service_bin_dir:
+  ping: /var/vcap/packages/ping
+service_common_dir: /var/vcap/store/ping_common
+supported_versions: ['1.0']
+default_version: '1.0'
+
+capacity: 50
+node_id: ping_node_1
+ping_memory: 16
+port_range:
+  first: 15000
+  last:  25000
+max_clients: 500
+ping_timeout: 2
+sasl_enabled: false
+
+
+# z_interval: 30

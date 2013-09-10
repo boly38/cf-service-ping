@@ -1,0 +1,27 @@
+#!/bin/bash
+<%
+node = properties.ping_node
+%>
+JOB_DIR=/var/vcap/jobs/ping_node_ng
+PKG_DIR=/var/vcap/packages/ping_node_ng
+BIN_DIR=/var/vcap/packages
+
+SOCKET_FILE=<%= node.warden_socket_path || "/tmp/warden.sock" %>
+source /var/vcap/packages/ping_node_ng/common/services/utils.sh
+
+case $1 in
+
+  start)
+    setup_warden
+    start_warden
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+    ;;
+
+  *)
+    echo "Usage: warden_ctl {start|stop}"
+    ;;
+
+esac

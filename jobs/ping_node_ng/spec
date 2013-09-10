@@ -1,0 +1,28 @@
+---
+name: ping_node_ng
+
+templates:
+# ping node controler and congi
+  ping_node_ctl: bin/ping_node_ctl
+  ping_node.yml.erb: config/ping_node.yml
+
+# logs configuration
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+  logrotate.conf.erb: config/logrotate.conf
+  ping_logrotate_cron.erb: config/ping_logrotate.cron
+
+# warden controlers and configuration
+  warden_ctl: bin/warden_ctl
+  warden.yml.erb: config/warden.yml
+  warden_service_ctl: bin/warden_service_ctl
+
+packages:
+  - common
+  - ping_node_ng
+# cf. (project)/packages/ping_node_ng/spec : this package include node source and node service source
+  - rootfs_lucid64
+  - node
+  - ruby
+  - ruby_next
+  - sqlite
+  - syslog_aggregator

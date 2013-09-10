@@ -1,0 +1,21 @@
+<%
+node = properties.ping_node
+health_check_port = node.health_check_port || 2345
+%>
+check process ping_warden
+  with pidfile /var/vcap/sys/run/warden/warden.pid
+  start program "/var/vcap/jobs/ping_node_ng/bin/warden_ctl start"
+  stop program "/var/vcap/jobs/ping_node_ng/bin/warden_ctl stop"
+  if failed host 127.0.0.1 port <%= health_check_port %> protocol http
+    and request '/'
+    with timeout 5 seconds for 2 cycles
+  then restart
+  group vcap
+
+check process ping_node
+  with pidfile /var/vcap/sys/run/ping_node/ping_node.pid
+  start program "/var/vcap/jobs/ping_node_ng/bin/ping_node_ctl start"
+  stop program "/var/vcap/jobs/ping_node_ng/bin/ping_node_ctl stop" with timeout 60 seconds
+  group vcap
+  group node
+  depend on ping_warden
