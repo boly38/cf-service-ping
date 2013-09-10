@@ -1,0 +1,12 @@
+[submodule "src/vblob_src"]
+  path = src/vblob_src
+  url = https://github.com/cloudfoundry/vblob.git
+[submodule "src/services_warden"]
+  path = src/services_warden
+  url = https://github.com/cloudfoundry/warden.git
+[submodule "src/services/govendor"]
+  path = src/services/govendor
+  url = https://github.com/cloudfoundry/govendor.git
+[submodule "src/tools"]
+  path = src/tools
+  url = https://github.com/cloudfoundry/vcap-tools.git
