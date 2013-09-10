@@ -10,14 +10,20 @@ Aim of this repository is to provide a small simple cloudfoundry (v2) service ca
 
 ##Service installation
 
-- echo "---" > config/dev.yml
-- echo "dev_name: cf-service-ping" > config/dev.yml
-- bosh create release --force
-- bosh -n upload release
+<pre>
+ echo "---" > config/dev.yml
+ echo "dev_name: cf-service-ping" > config/dev.yml
+ bosh create release --force
+ bosh -n upload release
+</pre>
+
 - copy <code>examples/ping.yml</code> into your bosh workspace and adapt #TOCHANGE lines
 - update ping.yml (set the last release version of "cf-service-ping")
-- bosh deployment ping.yml
-- bosh deploy
+
+<pre>
+ bosh deployment ping.yml
+ bosh deploy
+</pre>
 
 ##Target ping_node vm
 
