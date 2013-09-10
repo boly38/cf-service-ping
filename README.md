@@ -10,9 +10,12 @@ Aim of this repository is to provide a small simple cloudfoundry (v2) service ca
 
 ##Service installation
 
+- echo "---" > config/dev.yml
+- echo "dev_name: cf-service-ping" > config/dev.yml
 - bosh create release --force
 - bosh -n upload release
-- update ping.yml (set the last release version)
+- copy <code>examples/ping.yml</code> into your bosh workspace and adapt #TOCHANGE lines
+- update ping.yml (set the last release version of "cf-service-ping")
 - bosh deployment ping.yml
 - bosh deploy
 
@@ -50,9 +53,9 @@ Jobs to monitor are defined into <code>/var/vcap/ping_node_ng/monit<code>
 
 ### Ping source
 
-- src/service/PingSvc : cloudfoundry ping service source code : bin, node, gateway, and rspec (tests : to do)
+- <code>src/service/PingSvc</code> : cloudfoundry ping service source code : bin, node, gateway, and rspec (tests : to do)
  
-- src/services/PingSvc/lib/ping_node.rb
+- <code>src/services/PingSvc/lib/ping_node.rb</code>
 
     <code>VCAP::Services::Ping::Node</code> class 
       wich extends <code>VCAP::Services::Base::Node</code> with the following functions : provision, unprovision, bind, unbind, announcement, (actions)_instance
@@ -61,21 +64,21 @@ Jobs to monitor are defined into <code>/var/vcap/ping_node_ng/monit<code>
       wich extends <code>VCAP::Services::Base::Warden::Service</code>
       with the following functions : start_script, start_options, finish_start? finish_first_start? ...
 
-- src/ping_src : ping minimal ruby server
+- <code>src/ping_src</code> : ping minimal ruby server
 
 
 ### Bosh source
 
-- config
-- jobs/* : ping_node_ng, ping_gateway
-- packages/* : ping dependencies (referenced by "jobs/X/spec" files)
-- packages/ping_node_ng/spec : ping_node_ng package definition giving source files to include into a ping node (ex. src/ping_src)
+- <code>config</code>
+- <code>jobs/*</code> : ping_node_ng, ping_gateway
+- <code>packages/*</code> : ping dependencies (referenced by "jobs/X/spec" files)
+- <code>packages/ping_node_ng/spec</code> : ping_node_ng package definition giving source files to include into a ping node (ex. src/ping_src)
 
 
 ###Unhandled source
 
 The following files or directories are not maintained into this repository _cf. [cf-services-contrib-release](https://github.com/cloudfoundry/cf-services-contrib-release/)_
 
-- packages : common, libyaml, node,root_lucid64, ruby, ruby_next, sqlite, syslog_aggregator
-- src : common, pkg_utils, syslog_aggregator, services_warden
+- <code>packages</code> : common, libyaml, node,root_lucid64, ruby, ruby_next, sqlite, syslog_aggregator
+- <code>src</code> : common, pkg_utils, syslog_aggregator, services_warden
 
