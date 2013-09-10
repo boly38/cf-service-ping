@@ -8,6 +8,10 @@ Aim of this repository is to provide a small simple cloudfoundry (v2) service ca
 - ping_node use warden container
 
 
+Parent repositories : 
+- [cloudfoundry/cf-services-release] (https://github.com/cloudfoundry/cf-services-release)
+- [cloudfoundry/cf-services-contrib-release] (https://github.com/cloudfoundry/cf-services-contrib-release)
+
 ##Service installation
 
 <pre>
